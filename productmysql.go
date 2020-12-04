@@ -21,7 +21,7 @@ func (mysqlCompatable) DropDatabase(
 	db *sql.DB,
 	name string,
 ) error {
-	_, err := db.ExecContext(ctx, "CREATE DATABASE IF EXISTS `"+name+"`")
+	_, err := db.ExecContext(ctx, "DROP DATABASE IF EXISTS `"+name+"`")
 	return err
 }
 

@@ -24,6 +24,9 @@ var _ = Describe("func Open()", func() {
 
 			err = db.PingContext(ctx)
 			Expect(err).ShouldNot(HaveOccurred())
+
+			err = close()
+			Expect(err).ShouldNot(HaveOccurred())
 		},
 		entry(MySQLDriver, MySQL),
 	)
