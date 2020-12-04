@@ -15,6 +15,8 @@ func (p postgresProduct) TemplateDSN(d Driver) (string, bool) {
 	switch d {
 	case PGXDriver:
 		return "database=dogmatiq user=postgres password=rootpass sslmode=disable host=127.0.0.1 port=25432", true
+	case PostgresDriver:
+		return "postgres://postgres:rootpass@127.0.0.1:25432/dogmatiq?sslmode=disable", true
 	default:
 		return "", false
 	}

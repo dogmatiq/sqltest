@@ -32,8 +32,8 @@ var (
 	// PGXDriver is the "pgx" driver (https://github.com/jackc/pgx).
 	PGXDriver Driver = pgxDriver{}
 
-	// // PostgresDriver is "postgres" (https://github.com/lib/pq).
-	// PostgresDriver Driver = postgresDriver{}
+	// PostgresDriver is the "postgres" driver (https://github.com/lib/pq).
+	PostgresDriver Driver = postgresDriver{}
 
 	// // SQLite3Driver is the "sqlite3" driver (https://github.com/mattn/go-sqlite3).
 	// SQLite3Driver Driver = sqlite3Driver{}
