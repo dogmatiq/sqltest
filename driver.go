@@ -29,8 +29,8 @@ var (
 	// MySQLDriver is the "mysql" driver (https://github.com/go-sql-driver/mysql).
 	MySQLDriver Driver = mysqlDriver{}
 
-	// // PGXDriver is the "pgx" driver (https://github.com/jackc/pgx).
-	// PGXDriver Driver = pgxDriver{}
+	// PGXDriver is the "pgx" driver (https://github.com/jackc/pgx).
+	PGXDriver Driver = pgxDriver{}
 
 	// // PostgresDriver is "postgres" (https://github.com/lib/pq).
 	// PostgresDriver Driver = postgresDriver{}

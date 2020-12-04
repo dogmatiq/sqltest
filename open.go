@@ -149,6 +149,10 @@ func DSN(
 // generateDatabaseName returns a name for a temporary test database based on
 // the current time and the process PID.
 func generateDatabaseName(prefix string) string {
+	if prefix == "" {
+		prefix = "dogmatiq"
+	}
+
 	now := time.Now()
 
 	return fmt.Sprintf(

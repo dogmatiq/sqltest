@@ -23,7 +23,7 @@ jobs:
       env:
         DOGMATIQ_TEST_DSN_MYSQL_MYSQL: "root:rootpass@tcp(127.0.0.1:${{ job.services.mysql.ports['3306'] }})/dogmatiq"
         DOGMATIQ_TEST_DSN_MARIADB_MYSQL: "root:rootpass@tcp(127.0.0.1:${{ job.services.mariadb.ports['3306'] }})/dogmatiq"
-        DOGMATIQ_TEST_DSN_POSTGRESQL_PGX: "database=dogmatiq user=postgres password=rootpass sslmode=disable port=${{ job.services.postgres.ports['5432'] }}"
+        DOGMATIQ_TEST_DSN_POSTGRESQL_PGX: "database=dogmatiq user=postgres password=rootpass sslmode=disable host=127.0.0.1 port=${{ job.services.postgres.ports['5432'] }}"
     - name: Upload Coverage Reports
       if: success()
       run: |
