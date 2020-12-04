@@ -37,7 +37,14 @@ func Open(
 	db, err = sql.Open(d.Name(), dsn)
 	if err != nil {
 		closeDSN()
-		return nil, nil, err
+
+		return nil, nil, fmt.Errorf(
+			"could not open temporary %s database (%s) using the '%s' driver: %w",
+			p.Name(),
+			dsn,
+			d.Name(),
+			err,
+		)
 	}
 
 	return db, func() error {
@@ -65,7 +72,7 @@ func DSN(
 	defaultTemplateDSN, ok := p.TemplateDSN(d)
 	if !ok {
 		return "", noop, fmt.Errorf(
-			"%s can not be accessed using the the '%s' driver",
+			"%s can not be accessed using the '%s' driver",
 			p.Name(),
 			d.Name(),
 		)
@@ -115,8 +122,9 @@ func DSN(
 	db, err := sql.Open(d.Name(), schemaDSN)
 	if err != nil {
 		return "", noop, fmt.Errorf(
-			"unable to connect to %s using the '%s' driver: %w",
+			"unable to open %s database (%s) using the '%s' driver: %w",
 			p.Name(),
+			schemaDSN,
 			d.Name(),
 			err,
 		)

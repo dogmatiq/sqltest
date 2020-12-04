@@ -31,6 +31,7 @@ var _ = Describe("func Open()", func() {
 		entry(MySQLDriver, MySQL),
 		entry(MySQLDriver, MariaDB),
 		entry(PGXDriver, PostgreSQL),
+		entry(PostgresDriver, PostgreSQL),
 	)
 })
 
