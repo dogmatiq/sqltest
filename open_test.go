@@ -29,6 +29,7 @@ var _ = Describe("func Open()", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 		},
 		entry(MySQLDriver, MySQL),
+		entry(MySQLDriver, MariaDB),
 	)
 })
 

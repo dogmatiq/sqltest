@@ -15,7 +15,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
     ports:
-    - "23307:3307/tcp"
+    - "23307:3306/tcp"
     volumes:
     - mariadb:/var/lib/mysql
 
