@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+    - "23306:3306/tcp"
+    volumes:
+    - mysql:/var/lib/mysql
+
+  mariadb:
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+    - "23307:3307/tcp"
+    volumes:
+    - mariadb:/var/lib/mysql
+
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_PASSWORD: rootpass
+    ports:
+    - "25432:5432/tcp"
+    volumes:
+    - postgres:/var/lib/postgresql/data
+
+volumes:
+  mysql:
+  mariadb:
+  postgres:
