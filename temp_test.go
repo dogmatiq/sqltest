@@ -37,6 +37,10 @@ var _ = Describe("func NewTemporaryDatabase()", func() {
 
 			err = dsn.Close()
 			Expect(err).ShouldNot(HaveOccurred())
+
+			// Database should be closed now, ping should fail.
+			err = db.PingContext(ctx)
+			Expect(err).Should(HaveOccurred())
 		},
 		entries...,
 	)
