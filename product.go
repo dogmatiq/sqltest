@@ -29,7 +29,4 @@ var (
 
 	// PostgreSQL is the Product for PostgreSQL (https://www.postgresql.org).
 	PostgreSQL Product = postgresProduct{}
-
-	// // SQLite is the Product for SQLite (https://www.sqlite.org/index.html).
-	// SQLite Product = sqliteProduct{}
 )

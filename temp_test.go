@@ -11,27 +11,34 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("func Open()", func() {
-	DescribeTable(
-		"opens a connection to a database",
-		func(d Driver, p Product) {
-			ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-			defer cancel()
-
-			db, close, err := Open(ctx, d, p)
-			Expect(err).ShouldNot(HaveOccurred())
-			defer close()
-
-			err = db.PingContext(ctx)
-			Expect(err).ShouldNot(HaveOccurred())
-
-			err = close()
-			Expect(err).ShouldNot(HaveOccurred())
-		},
+var _ = Describe("func NewTemporaryDatabase()", func() {
+	entries := []TableEntry{
 		entry(MySQLDriver, MySQL),
 		entry(MySQLDriver, MariaDB),
 		entry(PGXDriver, PostgreSQL),
 		entry(PostgresDriver, PostgreSQL),
+	}
+
+	DescribeTable(
+		"it returns DSN that can be used to open a database",
+		func(d Driver, p Product) {
+			ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+			defer cancel()
+
+			dsn, err := NewTemporaryDatabase(ctx, d, p)
+			Expect(err).ShouldNot(HaveOccurred())
+			defer dsn.Close()
+
+			db, err := dsn.Open()
+			Expect(err).ShouldNot(HaveOccurred())
+
+			err = db.PingContext(ctx)
+			Expect(err).ShouldNot(HaveOccurred())
+
+			err = dsn.Close()
+			Expect(err).ShouldNot(HaveOccurred())
+		},
+		entries...,
 	)
 })
 
