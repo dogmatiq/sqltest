@@ -20,24 +20,38 @@ func (pgxDriver) DatabaseNameFromDSN(dsn string) (string, error) {
 	return cfg.Database, nil
 }
 
-func (pgxDriver) DSNForSchemaManipulation(templateDSN string) (string, error) {
+func (d pgxDriver) DSNForSchemaManipulation(templateDSN string) (*DSN, error) {
 	cfg, err := pgx.ParseConfig(templateDSN)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	cfg.Database = "" // connect to the default database
 
-	return stdlib.RegisterConnConfig(cfg), nil
+	return &DSN{
+		Driver:     d.Name(),
+		DataSource: stdlib.RegisterConnConfig(cfg),
+		Closer: func(dsn *DSN) error {
+			stdlib.UnregisterConnConfig(dsn.DataSource)
+			return nil
+		},
+	}, nil
 }
 
-func (pgxDriver) DSNForTesting(templateDSN, database string) (string, error) {
+func (d pgxDriver) DSNForTesting(templateDSN, database string) (*DSN, error) {
 	cfg, err := pgx.ParseConfig(templateDSN)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	cfg.Database = database
 
-	return stdlib.RegisterConnConfig(cfg), nil
+	return &DSN{
+		Driver:     d.Name(),
+		DataSource: stdlib.RegisterConnConfig(cfg),
+		Closer: func(dsn *DSN) error {
+			stdlib.UnregisterConnConfig(dsn.DataSource)
+			return nil
+		},
+	}, nil
 }

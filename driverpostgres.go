@@ -20,24 +20,30 @@ func (postgresDriver) DatabaseNameFromDSN(dsn string) (string, error) {
 	return strings.TrimPrefix(u.Path, "/"), nil
 }
 
-func (postgresDriver) DSNForSchemaManipulation(templateDSN string) (string, error) {
+func (d postgresDriver) DSNForSchemaManipulation(templateDSN string) (*DSN, error) {
 	u, err := url.Parse(templateDSN)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	u.Path = "" // connect to the default database
 
-	return u.String(), nil
+	return &DSN{
+		Driver:     d.Name(),
+		DataSource: u.String(),
+	}, nil
 }
 
-func (postgresDriver) DSNForTesting(templateDSN, database string) (string, error) {
+func (d postgresDriver) DSNForTesting(templateDSN, database string) (*DSN, error) {
 	u, err := url.Parse(templateDSN)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	u.Path = database
 
-	return u.String(), nil
+	return &DSN{
+		Driver:     d.Name(),
+		DataSource: u.String(),
+	}, nil
 }

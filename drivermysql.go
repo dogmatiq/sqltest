@@ -19,7 +19,7 @@ func (mysqlDriver) DatabaseNameFromDSN(dsn string) (string, error) {
 	return cfg.DBName, nil
 }
 
-func (mysqlDriver) DSNForSchemaManipulation(templateDSN string) (string, error) {
+func (d mysqlDriver) DSNForSchemaManipulation(templateDSN string) (*DSN, error) {
 	// Mangle the database name in the parsed DSN so that we can connect to the
 	// server using the "mysql" database.
 	//
@@ -28,20 +28,26 @@ func (mysqlDriver) DSNForSchemaManipulation(templateDSN string) (string, error) 
 	// guaranteed to exist.
 	cfg, err := mysql.ParseDSN(templateDSN)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	cfg.DBName = "mysql"
 
-	return cfg.FormatDSN(), nil
+	return &DSN{
+		Driver:     d.Name(),
+		DataSource: cfg.FormatDSN(),
+	}, nil
 }
 
-func (mysqlDriver) DSNForTesting(templateDSN, database string) (string, error) {
+func (d mysqlDriver) DSNForTesting(templateDSN, database string) (*DSN, error) {
 	cfg, err := mysql.ParseDSN(templateDSN)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	cfg.DBName = database
 
-	return cfg.FormatDSN(), nil
+	return &DSN{
+		Driver:     d.Name(),
+		DataSource: cfg.FormatDSN(),
+	}, nil
 }

@@ -18,11 +18,11 @@ type Driver interface {
 
 	// DSNForSchemaManipulation returns a DSN that can be used to connect to a
 	// database in order to create and drop other databases.
-	DSNForSchemaManipulation(templateDSN string) (string, error)
+	DSNForSchemaManipulation(templateDSN string) (*DSN, error)
 
 	// DSNForTesting returns a DSN that connects to a specific database for
 	// running tests.
-	DSNForTesting(templateDSN, database string) (string, error)
+	DSNForTesting(templateDSN, database string) (*DSN, error)
 }
 
 var (
@@ -34,7 +34,4 @@ var (
 
 	// PostgresDriver is the "postgres" driver (https://github.com/lib/pq).
 	PostgresDriver Driver = postgresDriver{}
-
-	// // SQLite3Driver is the "sqlite3" driver (https://github.com/mattn/go-sqlite3).
-	// SQLite3Driver Driver = sqlite3Driver{}
 )
