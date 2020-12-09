@@ -5,24 +5,44 @@ import (
 	"database/sql"
 )
 
-type postgresProduct struct{}
-
-func (p postgresProduct) Name() string {
-	return "PostgreSQL"
+// PostgresProtocol is an interface for drivers that use the PostgreSQL wire
+// protocol.
+type PostgresProtocol interface {
+	DataSourceForPostgres(
+		user, pass,
+		host, port,
+		database string,
+	) (DataSource, error)
 }
 
-func (p postgresProduct) TemplateDSN(d Driver) (string, bool) {
-	switch d {
-	case PGXDriver:
-		return "database=dogmatiq user=postgres password=rootpass sslmode=disable host=127.0.0.1 port=25432", true
-	case PostgresDriver:
-		return "postgres://postgres:rootpass@127.0.0.1:25432/dogmatiq?sslmode=disable", true
-	default:
-		return "", false
+// PostgresCompatibleProduct is a Product that is compatible with PostgreSQL.
+type PostgresCompatibleProduct struct {
+	ProductName string
+	DefaultPort string
+}
+
+// Name returns the human-readable name of the product.
+func (p PostgresCompatibleProduct) Name() string {
+	return p.ProductName
+}
+
+// DefaultDataSource returns the default data source to use to connect to the
+// product.
+func (p PostgresCompatibleProduct) DefaultDataSource(d Driver) (DataSource, error) {
+	proto, ok := d.(PostgresProtocol)
+	if !ok {
+		return nil, ErrIncompatibleDriver
 	}
+
+	return proto.DataSourceForPostgres(
+		"postgres", "rootpass",
+		"127.0.0.1", p.DefaultPort,
+		"", // default database
+	)
 }
 
-func (postgresProduct) CreateDatabase(
+// CreateDatabase creates a new database with the given name.
+func (PostgresCompatibleProduct) CreateDatabase(
 	ctx context.Context,
 	db *sql.DB,
 	name string,
@@ -31,7 +51,8 @@ func (postgresProduct) CreateDatabase(
 	return err
 }
 
-func (postgresProduct) DropDatabase(
+// DropDatabase drops the database with the given name.
+func (PostgresCompatibleProduct) DropDatabase(
 	ctx context.Context,
 	db *sql.DB,
 	name string,
