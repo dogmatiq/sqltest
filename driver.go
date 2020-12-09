@@ -13,16 +13,28 @@ type Driver interface {
 	// Name returns the name of the driver, as passed to sql.Open().
 	Name() string
 
-	// DatabaseNameFromDSN returns the database name in the given DSN.
-	DatabaseNameFromDSN(dsn string) (string, error)
+	// ParseDSN parses a DSN. It returns an error if this DSN string is not
+	// compatible with this driver.
+	ParseDSN(dsn string) (DataSource, error)
+}
 
-	// DSNForSchemaManipulation returns a DSN that can be used to connect to a
-	// database in order to create and drop other databases.
-	DSNForSchemaManipulation(templateDSN string) (*DSN, error)
+// DataSource is a DSN tied to a specific driver.
+type DataSource interface {
+	// DriverName returns the name of the driver as used with sql.Open().
+	DriverName() string
 
-	// DSNForTesting returns a DSN that connects to a specific database for
-	// running tests.
-	DSNForTesting(templateDSN, database string) (*DSN, error)
+	// DSN returns the DSN string as used with sql.Open().
+	DSN() string
+
+	// DatabaseName returns the name of the database within the data source.
+	DatabaseName() string
+
+	// WithDatabaseName returns a clone of this data source that connects to a
+	// different database.
+	WithDatabaseName(name string) DataSource
+
+	// Close releases any resources associated with the data source.
+	Close() error
 }
 
 var (
@@ -34,4 +46,7 @@ var (
 
 	// PostgresDriver is the "postgres" driver (https://github.com/lib/pq).
 	PostgresDriver Driver = postgresDriver{}
+
+	// SQLite3Driver is the "sqlite3" driver (github.com/mattn/go-sqlite3).
+	SQLite3Driver Driver = sqlite3Driver{}
 )
