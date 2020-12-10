@@ -15,8 +15,9 @@ import (
 
 // Database is a database created for the purposes of testing.
 type Database struct {
-	product    Product
-	dataSource DataSource
+	Driver     Driver
+	Product    Product
+	DataSource DataSource
 
 	m       sync.Mutex
 	open    bool
@@ -48,8 +49,9 @@ func NewDatabase(
 
 	if !ok {
 		return &Database{
-			product:    p,
-			dataSource: testDS,
+			Driver:     d,
+			Product:    p,
+			DataSource: testDS,
 			open:       true,
 		}, nil
 	}
@@ -71,8 +73,9 @@ func NewDatabase(
 	}
 
 	return &Database{
-		product:    p,
-		dataSource: testDS,
+		Driver:     d,
+		Product:    p,
+		DataSource: testDS,
 		open:       true,
 		closers: []func() error{
 			pool.Close,
@@ -97,7 +100,7 @@ func (db *Database) Open() (*sql.DB, error) {
 		return nil, errors.New("attempted to open a database pool for a closed database")
 	}
 
-	pool, err := openPool(db.product, db.dataSource)
+	pool, err := openPool(db.Product, db.DataSource)
 	if err != nil {
 		return nil, err
 	}
@@ -128,8 +131,8 @@ func (db *Database) Close() error {
 		err = multierr.Append(err, closers[i]())
 	}
 
-	if db.dataSource != nil {
-		err = multierr.Append(err, db.dataSource.Close())
+	if db.DataSource != nil {
+		err = multierr.Append(err, db.DataSource.Close())
 	}
 
 	return err
