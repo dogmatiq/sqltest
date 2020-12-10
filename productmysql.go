@@ -25,15 +25,16 @@ func (p MySQLCompatibleProduct) Name() string {
 	return p.ProductName
 }
 
+// IsCompatibleWith return true if the product is compatible with d.
+func (p MySQLCompatibleProduct) IsCompatibleWith(d Driver) bool {
+	_, ok := d.(MySQLProtocol)
+	return ok
+}
+
 // DefaultDataSource returns the default data source to use to connect to the
 // product.
 func (p MySQLCompatibleProduct) DefaultDataSource(d Driver) (DataSource, error) {
-	proto, ok := d.(MySQLProtocol)
-	if !ok {
-		return nil, ErrIncompatibleDriver
-	}
-
-	return proto.DataSourceForMySQL(
+	return d.(MySQLProtocol).DataSourceForMySQL(
 		"root", "rootpass",
 		"127.0.0.1", p.DefaultPort,
 		"mysql",

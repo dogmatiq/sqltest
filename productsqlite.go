@@ -17,13 +17,13 @@ func (sqliteProduct) Name() string {
 	return "SQLite"
 }
 
-func (sqliteProduct) DefaultDataSource(d Driver) (DataSource, error) {
-	proto, ok := d.(SQLiteProtocol)
-	if !ok {
-		return nil, ErrIncompatibleDriver
-	}
+func (sqliteProduct) IsCompatibleWith(d Driver) bool {
+	_, ok := d.(SQLiteProtocol)
+	return ok
+}
 
-	return proto.DataSourceForSQLite(
+func (sqliteProduct) DefaultDataSource(d Driver) (DataSource, error) {
+	return d.(SQLiteProtocol).DataSourceForSQLite(
 		filepath.Join(os.TempDir(), "dogmatiq.sqlite3"),
 	)
 }

@@ -141,6 +141,14 @@ func (db *Database) Close() error {
 // It first checks for an environment variable containing a DSN. If that is not
 // present it askes the product to generate a default DSN.
 func dataSource(d Driver, p Product) (DataSource, error) {
+	if !p.IsCompatibleWith(d) {
+		return nil, fmt.Errorf(
+			"%s is incompatible with the '%s' driver",
+			p.Name(),
+			d.Name(),
+		)
+	}
+
 	key := strings.ToUpper(fmt.Sprintf("DOGMATIQ_TEST_DSN_%s_%s", p.Name(), d.Name()))
 	dsn := os.Getenv(key)
 
@@ -158,14 +166,6 @@ func dataSource(d Driver, p Product) (DataSource, error) {
 	}
 
 	ds, err := p.DefaultDataSource(d)
-
-	if errors.Is(err, ErrIncompatibleDriver) {
-		return nil, fmt.Errorf(
-			"%s is incompatible with the '%s' driver",
-			p.Name(),
-			d.Name(),
-		)
-	}
 
 	if err != nil {
 		return nil, fmt.Errorf(

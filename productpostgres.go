@@ -26,15 +26,16 @@ func (p PostgresCompatibleProduct) Name() string {
 	return p.ProductName
 }
 
+// IsCompatibleWith return true if the product is compatible with d.
+func (p PostgresCompatibleProduct) IsCompatibleWith(d Driver) bool {
+	_, ok := d.(PostgresProtocol)
+	return ok
+}
+
 // DefaultDataSource returns the default data source to use to connect to the
 // product.
 func (p PostgresCompatibleProduct) DefaultDataSource(d Driver) (DataSource, error) {
-	proto, ok := d.(PostgresProtocol)
-	if !ok {
-		return nil, ErrIncompatibleDriver
-	}
-
-	return proto.DataSourceForPostgres(
+	return d.(PostgresProtocol).DataSourceForPostgres(
 		"postgres", "rootpass",
 		"127.0.0.1", p.DefaultPort,
 		"", // default database

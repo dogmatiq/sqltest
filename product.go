@@ -3,12 +3,7 @@ package sqltest
 import (
 	"context"
 	"database/sql"
-	"errors"
 )
-
-// ErrIncompatibleDriver indicates that a specific driver can not be used to
-// connect to a specific product.
-var ErrIncompatibleDriver = errors.New("the driver is not compatible with the product")
 
 // Product is a specific database product such as MySQL or MariaDB.
 //
@@ -17,6 +12,9 @@ var ErrIncompatibleDriver = errors.New("the driver is not compatible with the pr
 type Product interface {
 	// Name returns the human-readable name of the product.
 	Name() string
+
+	// IsCompatibleWith return true if the product is compatible with d.
+	IsCompatibleWith(d Driver) bool
 
 	// DefaultDataSource returns the default data source to use to connect to
 	// the product.
@@ -64,4 +62,12 @@ var (
 
 	// SQLite is the Product for SQLite (https://www.sqlite.org).
 	SQLite Product = sqliteProduct{}
+
+	// Products is a slice containing all known products.
+	Products = []Product{
+		MySQL,
+		MariaDB,
+		PostgreSQL,
+		SQLite,
+	}
 )
