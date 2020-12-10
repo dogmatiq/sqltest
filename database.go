@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"go.uber.org/multierr"
@@ -182,16 +183,14 @@ func dataSource(d Driver, p Product) (DataSource, error) {
 	return ds, nil
 }
 
-// generateTemporaryDatabaseName returns a name for a temporary test database
-// based on the current time and the process PID.
-func generateTemporaryDatabaseName() string {
-	now := time.Now()
+var counter uint64 // atomic
 
+// generateTemporaryDatabaseName returns a name for a temporary test database.
+func generateTemporaryDatabaseName() string {
 	return fmt.Sprintf(
-		"dogmatiq_sqltest_%s_PID%d_%d",
-		now.Format("20060102_150405"),
+		"test_%d_%d",
 		os.Getpid(),
-		now.UnixNano(),
+		atomic.AddUint64(&counter, 1),
 	)
 }
 
