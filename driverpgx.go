@@ -84,7 +84,7 @@ func (ds pgxDataSource) WithDatabaseName(database string) DataSource {
 
 	return pgxDataSource{
 		config:  cfg,
-		dsn:     stdlib.RegisterConnConfig(ds.config),
+		dsn:     stdlib.RegisterConnConfig(cfg),
 		release: true,
 	}
 }
