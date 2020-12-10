@@ -1,8 +1,6 @@
 package sqltest
 
 import (
-	"fmt"
-
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/stdlib"
 )
@@ -56,8 +54,6 @@ func (d pgxDriver) DataSourceForPostgres(
 	if database != "" {
 		dsn += " database=" + database
 	}
-
-	fmt.Println(dsn)
 
 	return d.ParseDSN(dsn)
 }
