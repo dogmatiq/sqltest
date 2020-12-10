@@ -13,6 +13,10 @@ func (mysqlDriver) Name() string {
 	return "mysql"
 }
 
+func (mysqlDriver) IsAvailable() bool {
+	return true
+}
+
 func (mysqlDriver) ParseDSN(dsn string) (DataSource, error) {
 	cfg, err := mysql.ParseDSN(dsn)
 	if err != nil {

@@ -3,13 +3,19 @@ package sqltest
 var (
 	// DriversByProduct maps a Product to the Driver implementations that it is
 	// compatible with.
+	//
+	// The map does not include any drivers that are not currently available.
 	DriversByProduct = map[Product][]Driver{}
 
 	// ProductsByDriver maps a Driver to the Product implementations that it is
 	// compatible with.
+	//
+	// The map does not include any drivers that are not currently available.
 	ProductsByDriver = map[Driver][]Product{}
 
 	// CompatiblePairs contains all compatible driver/product pairs.
+	//
+	// The slice does not include any drivers that are not currently available.
 	CompatiblePairs []Pair
 )
 
@@ -22,11 +28,13 @@ type Pair struct {
 
 func init() {
 	for _, d := range Drivers {
-		for _, p := range Products {
-			if p.IsCompatibleWith(d) {
-				DriversByProduct[p] = append(DriversByProduct[p], d)
-				ProductsByDriver[d] = append(ProductsByDriver[d], p)
-				CompatiblePairs = append(CompatiblePairs, Pair{d, p})
+		if d.IsAvailable() {
+			for _, p := range Products {
+				if p.IsCompatibleWith(d) {
+					DriversByProduct[p] = append(DriversByProduct[p], d)
+					ProductsByDriver[d] = append(ProductsByDriver[d], p)
+					CompatiblePairs = append(CompatiblePairs, Pair{d, p})
+				}
 			}
 		}
 	}

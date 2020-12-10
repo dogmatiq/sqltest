@@ -14,6 +14,10 @@ func (postgresDriver) Name() string {
 	return "postgres"
 }
 
+func (postgresDriver) IsAvailable() bool {
+	return true
+}
+
 func (postgresDriver) ParseDSN(dsn string) (DataSource, error) {
 	u, err := url.Parse(dsn)
 	if err != nil {

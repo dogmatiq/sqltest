@@ -13,6 +13,9 @@ type Driver interface {
 	// Name returns the name of the driver, as passed to sql.Open().
 	Name() string
 
+	// IsAvailable returns true if this driver is available for use.
+	IsAvailable() bool
+
 	// ParseDSN parses a DSN. It returns an error if this DSN string is not
 	// compatible with this driver.
 	ParseDSN(dsn string) (DataSource, error)

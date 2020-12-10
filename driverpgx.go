@@ -14,6 +14,10 @@ func (pgxDriver) Name() string {
 	return "pgx"
 }
 
+func (pgxDriver) IsAvailable() bool {
+	return true
+}
+
 func (pgxDriver) ParseDSN(dsn string) (DataSource, error) {
 	cfg, err := pgx.ParseConfig(dsn)
 	if err != nil {
