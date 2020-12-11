@@ -58,6 +58,6 @@ func (PostgresCompatibleProduct) DropDatabase(
 	db *sql.DB,
 	name string,
 ) error {
-	_, err := db.ExecContext(ctx, `DROP DATABASE IF EXISTS "`+name+`"`)
+	_, err := db.ExecContext(ctx, `DROP DATABASE IF EXISTS "`+name+`" WITH (FORCE)`)
 	return err
 }
