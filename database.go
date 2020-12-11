@@ -97,7 +97,14 @@ func NewDatabase(
 //
 // The pool is closed when db.Close() is called.
 func (db *Database) Open() (*sql.DB, error) {
-	if db == nil || !db.open {
+	if db == nil {
+		return nil, errors.New("attempted to open a database pool for a closed database")
+	}
+
+	db.m.Lock()
+	defer db.m.Unlock()
+
+	if !db.open {
 		return nil, errors.New("attempted to open a database pool for a closed database")
 	}
 
@@ -106,9 +113,6 @@ func (db *Database) Open() (*sql.DB, error) {
 		return nil, err
 	}
 
-	db.m.Lock()
-	defer db.m.Unlock()
-
 	db.closers = append(db.closers, pool.Close)
 
 	return pool, nil
@@ -116,15 +120,20 @@ func (db *Database) Open() (*sql.DB, error) {
 
 // Close releases any resources associated with the DSN.
 func (db *Database) Close() error {
-	if db == nil || !db.open {
+	if db == nil {
 		return nil
 	}
 
 	db.m.Lock()
+	defer db.m.Unlock()
+
+	if !db.open {
+		return nil
+	}
+
 	db.open = false
 	closers := db.closers
 	db.closers = nil
-	db.m.Unlock()
 
 	var err error
 
