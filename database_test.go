@@ -4,7 +4,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/dogmatiq/dapper"
 	. "github.com/dogmatiq/sqltest"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/ginkgo/extensions/table"
@@ -22,8 +21,6 @@ var _ = Describe("type Database", func() {
 				dsn, err := NewDatabase(ctx, d, p)
 				Expect(err).ShouldNot(HaveOccurred())
 				defer dsn.Close()
-
-				dapper.Print(dsn)
 
 				db, err := dsn.Open()
 				Expect(err).ShouldNot(HaveOccurred())
