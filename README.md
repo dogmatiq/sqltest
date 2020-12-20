@@ -12,7 +12,7 @@ real SQL database servers.
 It is only intended for use as a test dependencies for projects within the
 Dogmatiq organization.
 
-The primary feature is the `OpenTemporary()` function which creates a temporary
+The primary feature is the `NewDatabase()` function which creates a temporary
 database that can be discarded at the end of each test.
 
 ## Database Products
