@@ -9,5 +9,5 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/onsi/ginkgo v1.16.2
 	github.com/onsi/gomega v1.12.0
-	go.uber.org/multierr v1.6.0
+	go.uber.org/multierr v1.7.0
 )
