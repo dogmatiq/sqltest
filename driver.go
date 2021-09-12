@@ -53,7 +53,7 @@ var (
 	// SQLite3Driver is the "sqlite3" driver (github.com/mattn/go-sqlite3).
 	SQLite3Driver Driver = sqlite3Driver{}
 
-	// Drivers is a slice containing all known products.
+	// Drivers is a slice containing all known drivers.
 	Drivers = []Driver{
 		MySQLDriver,
 		PGXDriver,
