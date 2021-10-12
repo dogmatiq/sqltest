@@ -7,7 +7,7 @@ require (
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/lib/pq v1.10.3
 	github.com/mattn/go-sqlite3 v1.14.8
-	github.com/onsi/ginkgo v1.16.4
+	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.16.0
 	go.uber.org/multierr v1.7.0
 )
