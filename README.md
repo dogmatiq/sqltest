@@ -37,8 +37,10 @@ are supported via multiple different Go SQL drivers.
 The [`docker-stack.yml`](docker-stack.yml) file in this repository starts
 services for each of the supported database products. These services are typically required to run the tests for any project that depends on `dogmatiq/sqltest`.
 
+The stack can be deployed using the following command:
+
 ```console
-docker stack deploy dogmatiq-sqltest -c ./docker-stack.yml
+curl https://raw.githubusercontent.com/dogmatiq/sqltest/main/docker-stack.yml | docker stack deploy dogmatiq-sqltest --compose-file -
 ```
 
 ## GitHub Actions Configuration
