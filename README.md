@@ -20,19 +20,32 @@ database that can be discarded at the end of each test.
 The database products in the table below are currently supported. Some products
 are supported via multiple different Go SQL drivers.
 
-Each of these databases can be started using the provided [Docker stack](docker-stack.yml),
-and/or started within each project's Github Actions workflow. This project's
-[CI workflow](.github/workflows.ci.yml) serves as an example of how to start
-each product under Github Actions.
-
-Product     | Supported Drivers             | Notes
-------------|-------------------------------|-----------------------------------
-MySQL       | [mysql]                       |
-MariaDB     | [mysql]                       |
-PostgreSQL  | [pgx] (preferred), [postgres] |
-SQLite      | [sqlite3]                     | Embedded database, requires CGO
+| Product    | Supported Drivers             | Notes                           |
+| ---------- | ----------------------------- | ------------------------------- |
+| MySQL      | [mysql]                       | &mdash;                         |
+| MariaDB    | [mysql]                       | &mdash;                         |
+| PostgreSQL | [pgx] (preferred), [postgres] | &mdash;                         |
+| SQLite     | [sqlite3]                     | Embedded database, requires CGO |
 
 [mysql]: https://github.com/go-sql-driver/mysql
 [pgx]: https://github.com/jackc/pgx
 [postgres]: https://github.com/lib/pq
 [sqlite3]: https://github.com/mattn/go-sqlite3
+
+## Docker Stack
+
+The [`docker-stack.yml`](docker-stack.yml) file in this repository starts
+services for each of the supported database products. These services are typically required to run the tests for any project that depends on `dogmatiq/sqltest`.
+
+```console
+docker stack deploy dogmatiq-sqltest -c ./docker-stack.yml
+```
+
+## GitHub Actions Configuration
+
+Projects that depend on `dogmatiq/sqltest` should use the `go+sql` workflow. This workflow starts services for each of the supported
+database products, and runs the tests both with and without CGO enabled.
+
+The workflow is chosen by changing the repository definition in the [Terraform configuration]. To see an example, check the definition of `dogmatiq/sqltest` itself, which uses this workflow.
+
+[terraform configuration]: https://github.com/dogmatiq/repos
