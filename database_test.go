@@ -15,6 +15,10 @@ var _ = Describe("type Database", func() {
 		DescribeTable(
 			"it returns DSN that can be used to open a database",
 			func(d Driver, p Product) {
+				if !d.IsAvailable() {
+					Skip("driver is not available")
+				}
+
 				ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 				defer cancel()
 
