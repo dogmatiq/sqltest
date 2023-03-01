@@ -1,16 +1,19 @@
+<div align="center">
+
 # SQL Testing Utilities
 
-[![Build Status](https://github.com/dogmatiq/sqltest/workflows/CI/badge.svg)](https://github.com/dogmatiq/sqltest/actions?workflow=CI)
-[![Code Coverage](https://img.shields.io/codecov/c/github/dogmatiq/sqltest/main.svg)](https://codecov.io/github/dogmatiq/sqltest)
-[![Latest Version](https://img.shields.io/github/tag/dogmatiq/sqltest.svg?label=semver)](https://semver.org)
-[![Documentation](https://img.shields.io/badge/go.dev-reference-007d9c)](https://pkg.go.dev/github.com/dogmatiq/sqltest)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dogmatiq/sqltest)](https://goreportcard.com/report/github.com/dogmatiq/sqltest)
+A Go library containing utilities that help when writing tests that use real SQL
+database servers.
 
-This is a Go library containing utilities that help when writing tests that use
-real SQL database servers.
+[![Documentation](https://img.shields.io/badge/go.dev-documentation-007d9c?&style=for-the-badge)](https://pkg.go.dev/github.com/dogmatiq/sqltest)
+[![Latest Version](https://img.shields.io/github/tag/dogmatiq/sqltest.svg?&style=for-the-badge&label=semver)](https://github.com/dogmatiq/sqltest/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/dogmatiq/sqltest/ci.yml?style=for-the-badge&branch=main)](https://github.com/dogmatiq/sqltest/actions/workflows/ci.yml)
+[![Code Coverage](https://img.shields.io/codecov/c/github/dogmatiq/sqltest/main.svg?style=for-the-badge)](https://codecov.io/github/dogmatiq/sqltest)
 
-It is only intended for use as a test dependencies for projects within the
-Dogmatiq organization.
+</div>
+
+This library is only intended for use as a test dependencies for projects within
+the Dogmatiq organization.
 
 The primary feature is the `NewDatabase()` function which creates a temporary
 database that can be discarded at the end of each test.
