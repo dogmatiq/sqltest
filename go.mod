@@ -9,7 +9,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.27.3
-	go.uber.org/multierr v1.9.0
+	go.uber.org/multierr v1.10.0
 )
 
 require (
@@ -23,7 +23,6 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/pgtype v1.14.0 // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
-	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
