@@ -8,7 +8,7 @@ require (
 	github.com/lib/pq v1.10.7
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/onsi/ginkgo v1.16.5
-	github.com/onsi/gomega v1.27.4
+	github.com/onsi/gomega v1.27.5
 	go.uber.org/multierr v1.10.0
 )
 
