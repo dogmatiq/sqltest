@@ -3,7 +3,7 @@ module github.com/dogmatiq/sqltest
 go 1.19
 
 require (
-	github.com/go-sql-driver/mysql v1.7.0
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/lib/pq v1.10.8
 	github.com/mattn/go-sqlite3 v1.14.16
