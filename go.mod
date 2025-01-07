@@ -1,7 +1,8 @@
 module github.com/dogmatiq/sqltest
 
-go 1.22
-toolchain go1.22.5
+go 1.22.0
+
+toolchain go1.23.4
 
 require (
 	github.com/go-sql-driver/mysql v1.8.1
