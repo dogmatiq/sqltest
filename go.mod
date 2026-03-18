@@ -7,7 +7,7 @@ toolchain go1.24.1
 require (
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/jackc/pgx/v4 v4.18.3
-	github.com/lib/pq v1.11.2
+	github.com/lib/pq v1.12.0
 	github.com/mattn/go-sqlite3 v1.14.37
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.39.1
