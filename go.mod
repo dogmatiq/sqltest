@@ -8,7 +8,7 @@ require (
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/lib/pq v1.12.3
-	github.com/mattn/go-sqlite3 v1.14.41
+	github.com/mattn/go-sqlite3 v1.14.42
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.39.1
 	go.uber.org/multierr v1.11.0
